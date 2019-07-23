@@ -19,4 +19,16 @@ public class BDKEAGVMission {
         this.vehicleId = vehicleId;
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return "BDKEAGVMission{" +
+                "source='" + source + '\'' +
+                ", destination='" + destination + '\'' +
+                ", requestTime=" + requestTime +
+                ", candicatePath=" + candicatePath +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", priority=" + priority +
+                '}';
+    }
 }

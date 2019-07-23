@@ -12,7 +12,9 @@ public class DirectedEdgeWrapper {
     private long timeCost;
     private long timeIn;
     private long timeOut;
-    private int missionNumber;
+    private String missionNumber;
+    private long timeToWait;
+
     public String getVehicleId() {
         return vehicleId;
     }
@@ -53,9 +55,25 @@ public class DirectedEdgeWrapper {
         this.timeOut = timeOut;
     }
 
-    public DirectedEdgeWrapper(DirectedEdge edge, long timeIn, String vehicleId, int missionNumber) {
+    public String getMissionNumber() {
+        return missionNumber;
+    }
+
+    public void setMissionNumber(String missionNumber) {
+        this.missionNumber = missionNumber;
+    }
+
+    public long getTimeToWait() {
+        return timeToWait;
+    }
+
+    public void setTimeToWait(long timeToWait) {
+        this.timeToWait = timeToWait;
+    }
+
+    public DirectedEdgeWrapper(DirectedEdge edge, long timeIn, String vehicleId, String missionNumber) {
         this.edge = edge;
-        this.timeCost = (long) ((edge.weight() / BDKEAGV.VELOCITY) * (1 + 0.005) * 1000);  //ms -> s
+        this.timeCost = (long) ((edge.weight() / BDKEAGV.VELOCITY) * (1 + BDKEAGV.CORRECTION) * 1000);  //ms -> s
         this.timeIn = timeIn;
         this.timeOut = this.timeIn + this.timeCost;
         this.vehicleId = vehicleId;
@@ -65,10 +83,13 @@ public class DirectedEdgeWrapper {
     @Override
     public String toString() {
         return "DirectedEdgeWrapper{" +
-                "edge=" + edge +
+                "vehicleId='" + vehicleId + '\'' +
+                ", edge=" + edge +
                 ", timeCost=" + timeCost +
                 ", timeIn=" + timeIn +
                 ", timeOut=" + timeOut +
+                ", missionNumber=" + missionNumber +
+                ", timeToWait=" + timeToWait +
                 '}';
     }
 }

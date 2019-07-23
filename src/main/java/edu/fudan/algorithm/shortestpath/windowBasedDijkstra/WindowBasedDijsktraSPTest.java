@@ -1,19 +1,26 @@
 package edu.fudan.algorithm.shortestpath.windowBasedDijkstra;
 
-import edu.fudan.algorithm.shortestpath.dijkstra.DijkstraAlgorithmSP;
 import edu.fudan.algorithm.shortestpath.dijkstra.DirectedEdge;
 import edu.fudan.algorithm.shortestpath.dijkstra.EdgeWeightedDiGraph;
-import org.junit.Test;
+import edu.fudan.algorithm.shortestpath.dijkstra.WindowBasedRouter;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Stack;
 
 public class WindowBasedDijsktraSPTest {
-    @Test
-    public void traverseTest() {
-        EdgeWeightedDiGraph G = new EdgeWeightedDiGraph(8);
+    private static EdgeWeightedDiGraph G = new EdgeWeightedDiGraph(8);
+    private static ArrayList<String> vehicles = new ArrayList<>();
+
+    static {
+        /**
+         * 0 to 0 (0.00):
+         * 0 to 1 (1.05): 0 -> 4 0.38   4 -> 5 0.35   5 -> 1 0.32
+         * 0 to 2 (0.26): 0 -> 2 0.26
+         * 0 to 3 (0.99): 0 -> 2 0.26   2 -> 7 0.34   7 -> 3 0.39
+         * 0 to 4 (0.38): 0 -> 4 0.38
+         * 0 to 5 (0.73): 0 -> 4 0.38   4 -> 5 0.35
+         * 0 to 6 (1.51): 0 -> 2 0.26   2 -> 7 0.34   7 -> 3 0.39   3 -> 6 0.52
+         * 0 to 7 (0.60): 0 -> 2 0.26   2 -> 7 0.34
+         */
         G.addEdge(new DirectedEdge(4, 5, 0.35));
         G.addEdge(new DirectedEdge(5, 4, 0.35));
         G.addEdge(new DirectedEdge(4, 7, 0.37));
@@ -29,42 +36,22 @@ public class WindowBasedDijsktraSPTest {
         G.addEdge(new DirectedEdge(3, 6, 0.52));
         G.addEdge(new DirectedEdge(6, 0, 0.58));
         G.addEdge(new DirectedEdge(6, 4, 0.93));
-        int s = 0;
-        int t = 1;
-        DijkstraAlgorithmSP sp = new DijkstraAlgorithmSP(G, s);
-        /**
-         * 0 to 0 (0.00):
-         * 0 to 1 (1.05): 0 -> 4 0.38   4 -> 5 0.35   5 -> 1 0.32
-         * 0 to 2 (0.26): 0 -> 2 0.26
-         * 0 to 3 (0.99): 0 -> 2 0.26   2 -> 7 0.34   7 -> 3 0.39
-         * 0 to 4 (0.38): 0 -> 4 0.38
-         * 0 to 5 (0.73): 0 -> 4 0.38   4 -> 5 0.35
-         * 0 to 6 (1.51): 0 -> 2 0.26   2 -> 7 0.34   7 -> 3 0.39   3 -> 6 0.52
-         * 0 to 7 (0.60): 0 -> 2 0.26   2 -> 7 0.34
-         */
-        int missionNumber = 0;
-        String vehicleId = "vehicle-01";
+        vehicles.add("Vehicle-01");
+        vehicles.add("Vehicle-02");
+        vehicles.add("Vehicle-03");
+        vehicles.add("Vehicle-04");
+    }
 
-        ArrayList<DirectedEdgeWrapper> windowPath = new ArrayList<>();
-        if (sp.hasPathTo(t)) {
-            Stack<DirectedEdge> path = sp.pathTo(t);
-            long requestTime = new Date().getTime();
-            int i = 0;
-            DirectedEdgeWrapper pre = null;
-            for (; !path.empty(); ) {
-                DirectedEdge e = path.pop();
-//                System.out.println(e.toString());
-                if (++i == 1){
-                    pre = new DirectedEdgeWrapper(e, requestTime, vehicleId, missionNumber);
-                    windowPath.add(pre);
-                }else {
-                    pre = new DirectedEdgeWrapper(e, pre.getTimeOut(), vehicleId, missionNumber);
-                    windowPath.add(pre);
-                }
-            }
-        }
-        for (DirectedEdgeWrapper wp : windowPath) {
-            System.out.println(wp.toString());
-        }
+    public static void main(String[] args) {
+        WindowBasedRouter router = new WindowBasedRouter(G, vehicles);
+        router.route(0, 0, "Vehicle-01", "1");
+        router.route(0, 1, "Vehicle-02", "2");
+        router.route(0, 2, "Vehicle-03", "3");
+        router.route(0, 3, "Vehicle-04", "4");
+        router.route(0, 4, "Vehicle-01", "5");
+        router.route(0, 5, "Vehicle-02", "6");
+        router.route(0, 6, "Vehicle-03", "7");
+        router.route(0, 7, "Vehicle-04", "8");
+        router.printWindowMetrix();
     }
 }
