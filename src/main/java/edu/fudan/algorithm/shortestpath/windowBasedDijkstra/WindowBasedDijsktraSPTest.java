@@ -2,7 +2,6 @@ package edu.fudan.algorithm.shortestpath.windowBasedDijkstra;
 
 import edu.fudan.algorithm.shortestpath.dijkstra.DirectedEdge;
 import edu.fudan.algorithm.shortestpath.dijkstra.EdgeWeightedDiGraph;
-import edu.fudan.algorithm.shortestpath.dijkstra.WindowBasedRouter;
 
 import java.util.ArrayList;
 
@@ -44,9 +43,12 @@ public class WindowBasedDijsktraSPTest {
 
     public static void main(String[] args) {
         WindowBasedRouter router = new WindowBasedRouter(G, vehicles);
+        // missionNumber 即 driveOrder 唯一的 id
         router.route(0, 0, "Vehicle-01", "1");
-        router.route(0, 1, "Vehicle-02", "2");
-        router.route(0, 2, "Vehicle-03", "3");
+        router.route(5, 4, "Vehicle-02", "1");
+        router.route(4, 5, "Vehicle-03", "1");
+//        router.route(0, 1, "Vehicle-02", "2");
+//        router.route(0, 2, "Vehicle-03", "3");
         router.route(0, 3, "Vehicle-04", "4");
         router.route(0, 4, "Vehicle-01", "5");
         router.route(0, 5, "Vehicle-02", "6");

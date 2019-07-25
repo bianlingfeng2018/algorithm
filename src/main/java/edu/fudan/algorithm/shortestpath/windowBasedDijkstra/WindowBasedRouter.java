@@ -1,8 +1,8 @@
-package edu.fudan.algorithm.shortestpath.dijkstra;
+package edu.fudan.algorithm.shortestpath.windowBasedDijkstra;
 
-import edu.fudan.algorithm.shortestpath.windowBasedDijkstra.BDKEAGVMission;
-import edu.fudan.algorithm.shortestpath.windowBasedDijkstra.BDKEWindowMatrix;
-import edu.fudan.algorithm.shortestpath.windowBasedDijkstra.DirectedEdgeWrapper;
+import edu.fudan.algorithm.shortestpath.dijkstra.DijkstraAlgorithmSP;
+import edu.fudan.algorithm.shortestpath.dijkstra.DirectedEdge;
+import edu.fudan.algorithm.shortestpath.dijkstra.EdgeWeightedDiGraph;
 
 import java.util.*;
 
